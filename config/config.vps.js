@@ -40,7 +40,7 @@ let config = {
 				calendars: [
 					{
 						symbol: "calendar-check",
-						url: "https://calendar.google.com/calendar/ical/YOUR_PUBLIC_ICS_URL/basic.ics"
+						url: "https://calendar.google.com/calendar/embed?src=thanhnguyen64la%40gmail.com&ctz=Asia%2FHo_Chi_Minh"
 					}
 				]
 			}
