@@ -65,9 +65,10 @@ Temporary Items
 !/css/main.css
 !/css/roboto.css
 
-# Ignore users config file but keep the sample.
-config
+# Ignore users config files but keep selected templates/local samples.
+config/*
 !config/config.js.sample
+!config/config.vps.js
 
 # Vim
 ## swap
