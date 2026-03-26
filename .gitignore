@@ -63,6 +63,7 @@ Temporary Items
 !/css/custom.css.sample
 !/css/font-awesome.css
 !/css/main.css
+!/css/mirror.vps.css
 !/css/roboto.css
 
 # Ignore users config files but keep selected templates/local samples.

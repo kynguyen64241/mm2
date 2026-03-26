@@ -1,0 +1,159 @@
+:root {
+  --color-text: rgba(228, 217, 201, 0.78);
+  --color-text-dimmed: rgba(206, 193, 176, 0.42);
+  --color-text-bright: #f6efe6;
+  --color-background: #050505;
+
+  --font-primary: "Roboto Condensed";
+  --font-secondary: "Roboto";
+
+  --font-size: 22px;
+  --font-size-small: 0.8rem;
+
+  --gap-body-top: 48px;
+  --gap-body-right: 56px;
+  --gap-body-bottom: 40px;
+  --gap-body-left: 56px;
+
+  --gap-modules: 28px;
+}
+
+body {
+  background:
+    radial-gradient(circle at top right, rgba(198, 155, 103, 0.14), transparent 30%),
+    radial-gradient(circle at bottom center, rgba(255, 255, 255, 0.05), transparent 30%),
+    #050505;
+  letter-spacing: 0.01em;
+}
+
+header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(240, 227, 210, 0.72);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.mirror-clock .date {
+  color: rgba(240, 227, 210, 0.8);
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.mirror-clock .time {
+  color: var(--color-text-bright);
+  font-size: clamp(4rem, 7vw, 6.25rem);
+  font-weight: 300;
+  letter-spacing: -0.08em;
+  line-height: 0.88;
+}
+
+.mirror-clock .clock-second-digital {
+  font-size: 0.35em;
+  margin-left: 0.18em;
+  vertical-align: top;
+}
+
+.mirror-compliment {
+  margin: 0 auto;
+  max-width: min(78vw, 900px);
+  padding: 16px 28px 0;
+  text-align: center;
+}
+
+.mirror-compliment span {
+  color: var(--color-text-bright);
+  display: block;
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight: 300;
+  letter-spacing: -0.06em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.mirror-compliment br {
+  display: none;
+}
+
+.mirror-weather-current .normal.medium,
+.mirror-weather-forecast table {
+  color: rgba(230, 219, 204, 0.7);
+}
+
+.mirror-weather-current .type-temp {
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.mirror-weather-current .type-temp .weathericon {
+  color: rgba(241, 203, 138, 0.9);
+  font-size: 2.2rem;
+}
+
+.mirror-weather-current .type-temp .bright {
+  font-size: clamp(3.5rem, 5vw, 4.8rem);
+  letter-spacing: -0.06em;
+}
+
+.mirror-weather-current .feelslike,
+.mirror-weather-current .humidity {
+  color: rgba(226, 213, 197, 0.65);
+}
+
+.mirror-weather-forecast table {
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  width: 100%;
+}
+
+.mirror-weather-forecast td {
+  padding: 0;
+}
+
+.mirror-weather-forecast .day {
+  color: rgba(229, 216, 198, 0.6);
+  padding-right: 14px;
+  text-transform: uppercase;
+}
+
+.mirror-weather-forecast .weather-icon {
+  padding-right: 10px;
+}
+
+.mirror-weather-forecast .max-temp {
+  color: var(--color-text-bright);
+  padding-right: 12px;
+}
+
+.mirror-weather-forecast .min-temp {
+  color: rgba(229, 216, 198, 0.55);
+}
+
+.mirror-news {
+  max-width: 100%;
+  padding: 0 40px 8px;
+  text-align: center;
+}
+
+.mirror-news .newsfeed-source {
+  color: rgba(229, 216, 198, 0.52);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.mirror-news .newsfeed-title {
+  color: var(--color-text-bright);
+  font-size: clamp(1.5rem, 2.1vw, 2.35rem);
+  line-height: 1.25;
+  margin: 0 auto;
+  max-width: min(74vw, 980px);
+}
+
+.dimmed {
+  color: rgba(229, 216, 198, 0.5);
+}
