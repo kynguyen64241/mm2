@@ -1,0 +1,32 @@
+@import url("../mirror.vps.css");
+
+/* Auto-generated from config/profiles/vps.json. */
+/* Edit the profile file instead of this generated CSS. */
+
+:root {
+  --color-text: rgba(228, 217, 201, 0.78);
+  --color-text-dimmed: rgba(206, 193, 176, 0.42);
+  --color-text-bright: #f6efe6;
+  --color-background: #050505;
+  --font-primary: "Roboto Condensed";
+  --font-secondary: "Roboto";
+  --font-size: 22px;
+  --font-size-small: 0.8rem;
+  --gap-body-top: 48px;
+  --gap-body-right: 56px;
+  --gap-body-bottom: 40px;
+  --gap-body-left: 56px;
+  --gap-modules: 28px;
+  --mirror-bg-glow-top: rgba(198, 155, 103, 0.14);
+  --mirror-bg-glow-bottom: rgba(255, 255, 255, 0.05);
+  --mirror-header-border: rgba(255, 255, 255, 0.14);
+  --mirror-header-text: rgba(240, 227, 210, 0.72);
+  --mirror-clock-date: rgba(240, 227, 210, 0.8);
+  --mirror-weather-text: rgba(230, 219, 204, 0.7);
+  --mirror-weather-icon: rgba(241, 203, 138, 0.9);
+  --mirror-weather-detail: rgba(226, 213, 197, 0.65);
+  --mirror-weather-day: rgba(229, 216, 198, 0.6);
+  --mirror-weather-min: rgba(229, 216, 198, 0.55);
+  --mirror-news-source: rgba(229, 216, 198, 0.52);
+  --mirror-dimmed: rgba(229, 216, 198, 0.5);
+}

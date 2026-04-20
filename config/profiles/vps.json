@@ -1,0 +1,178 @@
+{
+  "deviceId": "vps",
+  "general": {
+    "address": "127.0.0.1",
+    "port": 8080,
+    "basePath": "/",
+    "ipWhitelist": ["127.0.0.1", "::ffff:127.0.0.1", "::1"],
+    "useHttps": false,
+    "httpsPrivateKey": "",
+    "httpsCertificate": "",
+    "language": "vi",
+    "locale": "vi-VN",
+    "logLevel": ["INFO", "LOG", "WARN", "ERROR"],
+    "timeFormat": 24,
+    "units": "metric"
+  },
+  "theme": {
+    "baseCss": "css/mirror.vps.css",
+    "outputFile": "vps.css",
+    "variables": {
+      "--color-text": "rgba(228, 217, 201, 0.78)",
+      "--color-text-dimmed": "rgba(206, 193, 176, 0.42)",
+      "--color-text-bright": "#f6efe6",
+      "--color-background": "#050505",
+      "--font-primary": "\"Roboto Condensed\"",
+      "--font-secondary": "\"Roboto\"",
+      "--font-size": "22px",
+      "--font-size-small": "0.8rem",
+      "--gap-body-top": "48px",
+      "--gap-body-right": "56px",
+      "--gap-body-bottom": "40px",
+      "--gap-body-left": "56px",
+      "--gap-modules": "28px",
+      "--mirror-bg-glow-top": "rgba(198, 155, 103, 0.14)",
+      "--mirror-bg-glow-bottom": "rgba(255, 255, 255, 0.05)",
+      "--mirror-header-border": "rgba(255, 255, 255, 0.14)",
+      "--mirror-header-text": "rgba(240, 227, 210, 0.72)",
+      "--mirror-clock-date": "rgba(240, 227, 210, 0.8)",
+      "--mirror-weather-text": "rgba(230, 219, 204, 0.7)",
+      "--mirror-weather-icon": "rgba(241, 203, 138, 0.9)",
+      "--mirror-weather-detail": "rgba(226, 213, 197, 0.65)",
+      "--mirror-weather-day": "rgba(229, 216, 198, 0.6)",
+      "--mirror-weather-min": "rgba(229, 216, 198, 0.55)",
+      "--mirror-news-source": "rgba(229, 216, 198, 0.52)",
+      "--mirror-dimmed": "rgba(229, 216, 198, 0.5)"
+    }
+  },
+  "modules": [
+    {
+      "id": "alert",
+      "module": "alert",
+      "enabled": true
+    },
+    {
+      "id": "clock-main",
+      "module": "clock",
+      "enabled": true,
+      "position": "top_left",
+      "classes": "mirror-clock",
+      "config": {
+        "displaySeconds": false,
+        "clockBold": true,
+        "dateFormat": "dddd, D [thg] M [nam] YYYY"
+      }
+    },
+    {
+      "id": "calendar-main",
+      "module": "calendar",
+      "enabled": false,
+      "header": "Lich",
+      "position": "top_left",
+      "classes": "mirror-calendar",
+      "config": {
+        "calendars": [
+          {
+            "symbol": "calendar-check",
+            "url": "YOUR_PUBLIC_ICS_URL"
+          }
+        ]
+      }
+    },
+    {
+      "id": "compliments-main",
+      "module": "compliments",
+      "enabled": true,
+      "position": "lower_third",
+      "classes": "mirror-compliment",
+      "config": {
+        "updateInterval": 45000,
+        "fadeSpeed": 2000,
+        "morningStartTime": 5,
+        "morningEndTime": 12,
+        "afternoonStartTime": 12,
+        "afternoonEndTime": 18,
+        "compliments": {
+          "anytime": [
+            "Hom nay lam tung viec mot nhe.",
+            "Di cham mot chut cung duoc, mien la dung huong.",
+            "San sang cho mot ngay moi."
+          ],
+          "morning": [
+            "Chao buoi sang.",
+            "Nhin ban hom nay rat on.",
+            "Pha mot ly cafe roi bat dau thoi."
+          ],
+          "afternoon": [
+            "Buoi chieu van con nhieu nang luong.",
+            "Lam tiep chut nua la xong.",
+            "Ban dang lam kha tot day."
+          ],
+          "evening": [
+            "Toi nay nho nghi ngoi mot chut.",
+            "Mot ngay nhu vay la du roi.",
+            "Thu gian di, mai tinh tiep."
+          ],
+          "....-01-01": [
+            "Chuc mung nam moi!"
+          ]
+        }
+      }
+    },
+    {
+      "id": "weather-current",
+      "module": "weather",
+      "enabled": true,
+      "position": "top_right",
+      "header": "Hien tai",
+      "classes": "mirror-weather-current",
+      "config": {
+        "weatherProvider": "openmeteo",
+        "type": "current",
+        "lat": 10.8231,
+        "lon": 106.6297,
+        "showHumidity": "below",
+        "showUVIndex": true,
+        "showSun": true
+      }
+    },
+    {
+      "id": "weather-forecast",
+      "module": "weather",
+      "enabled": true,
+      "position": "top_right",
+      "header": "Du bao 5 ngay",
+      "classes": "mirror-weather-forecast",
+      "config": {
+        "weatherProvider": "openmeteo",
+        "type": "forecast",
+        "lat": 10.8231,
+        "lon": 106.6297,
+        "fade": false,
+        "maxNumberOfDays": 5
+      }
+    },
+    {
+      "id": "news-main",
+      "module": "newsfeed",
+      "enabled": true,
+      "position": "bottom_bar",
+      "classes": "mirror-news",
+      "config": {
+        "feeds": [
+          {
+            "title": "VNExpress",
+            "url": "https://vnexpress.net/rss/tin-moi-nhat.rss"
+          }
+        ],
+        "showSourceTitle": true,
+        "showPublishDate": true,
+        "broadcastNewsFeeds": true,
+        "broadcastNewsUpdates": true,
+        "showDescription": false,
+        "wrapTitle": true,
+        "maxNewsItems": 10
+      }
+    }
+  ]
+}

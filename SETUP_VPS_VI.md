@@ -73,7 +73,18 @@ Repo local nay da co file:
 config/config.vps.js
 ```
 
-File nay duoc set theo huong an toan cho VPS:
+Bo config nay gio duoc tach ra thanh:
+
+```text
+config/config.vps.js
+config/builder.js
+config/profiles/vps.json
+css/generated/vps.css
+```
+
+`config/config.vps.js` chi con nhiem vu nap profile va build config. Du lieu thiet bi, module va theme nam trong `config/profiles/vps.json`.
+
+Profile mac dinh hien tai duoc set theo huong an toan cho VPS:
 
 - `address: "127.0.0.1"`
 - chi bind loopback
@@ -101,7 +112,7 @@ MM_CONFIG_FILE=config/config.vps.js npm run server:watch
 Luu y:
 
 - `server:watch` chi watch file, khong watch directory.
-- File `config/config.vps.js` da co `watchTargets` mac dinh.
+- File `config/config.vps.js` se tu them `watchTargets` cho builder, profile va css base.
 - Neu ban muon watch them file khac, bo sung vao `watchTargets`.
 
 ## 8. Mo giao dien tu may cua ban
@@ -149,15 +160,17 @@ Neu ban doi `basePath`, nho doi ca trong `config/config.vps.js`.
 
 Thu tu lam viec goi y:
 
-1. Sua `config/config.vps.js` de doi layout, module, vi tri.
-2. Tao `css/custom.css` tu file mau neu ban can style rieng:
+1. Sua `config/profiles/vps.json` de doi layout, module, vi tri, noi dung.
+2. Theme variables se duoc sinh ra `css/generated/vps.css`. Ban khong nen sua tay file generated nay.
+3. Sua `css/mirror.vps.css` neu ban can doi CSS cho module/layout theo kieu template chung.
+4. Tao `css/custom.css` tu file mau neu ban can them style rieng ngoai workflow profile:
 
 ```bash
 cp css/custom.css.sample css/custom.css
 ```
 
-3. Khi tao module rieng, dat trong `modules/YourModuleName`.
-4. Neu module co `node_helper.js`, khi sua file nay ban nen restart server hoac them no vao `watchTargets`.
+5. Khi tao module rieng, dat trong `modules/YourModuleName`.
+6. Neu module co `node_helper.js`, khi sua file nay ban nen restart server hoac them no vao `watchTargets`.
 
 ## 11. Lenh hay dung
 
@@ -198,4 +211,4 @@ Sau khi VPS chay len, thu tu hop ly nhat la:
 1. chot bo cuc mirror
 2. viet config cho Viet Nam
 3. tao 1 custom module rieng neu ban can du lieu/UX khac
-4. sau cung moi dong goi sang phan cung that
+4. sau cung moi lam website quan ly profile va dong goi sang phan cung that

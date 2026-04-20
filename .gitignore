@@ -62,6 +62,9 @@ Temporary Items
 /css/*
 !/css/custom.css.sample
 !/css/font-awesome.css
+!/css/generated/
+/css/generated/*
+!/css/generated/vps.css
 !/css/main.css
 !/css/mirror.vps.css
 !/css/roboto.css
@@ -69,7 +72,12 @@ Temporary Items
 # Ignore users config files but keep selected templates/local samples.
 config/*
 !config/config.js.sample
+!config/builder.js
 !config/config.vps.js
+!config/profiles/
+config/profiles/*
+!config/profiles/device.sample.json
+!config/profiles/vps.json
 
 # Vim
 ## swap

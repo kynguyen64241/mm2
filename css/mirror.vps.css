@@ -1,34 +1,14 @@
-:root {
-  --color-text: rgba(228, 217, 201, 0.78);
-  --color-text-dimmed: rgba(206, 193, 176, 0.42);
-  --color-text-bright: #f6efe6;
-  --color-background: #050505;
-
-  --font-primary: "Roboto Condensed";
-  --font-secondary: "Roboto";
-
-  --font-size: 22px;
-  --font-size-small: 0.8rem;
-
-  --gap-body-top: 48px;
-  --gap-body-right: 56px;
-  --gap-body-bottom: 40px;
-  --gap-body-left: 56px;
-
-  --gap-modules: 28px;
-}
-
 body {
   background:
-    radial-gradient(circle at top right, rgba(198, 155, 103, 0.14), transparent 30%),
-    radial-gradient(circle at bottom center, rgba(255, 255, 255, 0.05), transparent 30%),
-    #050505;
+    radial-gradient(circle at top right, var(--mirror-bg-glow-top), transparent 30%),
+    radial-gradient(circle at bottom center, var(--mirror-bg-glow-bottom), transparent 30%),
+    var(--color-background);
   letter-spacing: 0.01em;
 }
 
 header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-  color: rgba(240, 227, 210, 0.72);
+  border-bottom: 1px solid var(--mirror-header-border);
+  color: var(--mirror-header-text);
   font-size: 0.72rem;
   letter-spacing: 0.18em;
   margin-bottom: 12px;
@@ -37,7 +17,7 @@ header {
 }
 
 .mirror-clock .date {
-  color: rgba(240, 227, 210, 0.8);
+  color: var(--mirror-clock-date);
   font-size: 1.3rem;
   letter-spacing: 0.04em;
   margin-bottom: 8px;
@@ -80,7 +60,7 @@ header {
 
 .mirror-weather-current .normal.medium,
 .mirror-weather-forecast table {
-  color: rgba(230, 219, 204, 0.7);
+  color: var(--mirror-weather-text);
 }
 
 .mirror-weather-current .type-temp {
@@ -89,7 +69,7 @@ header {
 }
 
 .mirror-weather-current .type-temp .weathericon {
-  color: rgba(241, 203, 138, 0.9);
+  color: var(--mirror-weather-icon);
   font-size: 2.2rem;
 }
 
@@ -100,7 +80,7 @@ header {
 
 .mirror-weather-current .feelslike,
 .mirror-weather-current .humidity {
-  color: rgba(226, 213, 197, 0.65);
+  color: var(--mirror-weather-detail);
 }
 
 .mirror-weather-forecast table {
@@ -114,7 +94,7 @@ header {
 }
 
 .mirror-weather-forecast .day {
-  color: rgba(229, 216, 198, 0.6);
+  color: var(--mirror-weather-day);
   padding-right: 14px;
   text-transform: uppercase;
 }
@@ -129,7 +109,7 @@ header {
 }
 
 .mirror-weather-forecast .min-temp {
-  color: rgba(229, 216, 198, 0.55);
+  color: var(--mirror-weather-min);
 }
 
 .mirror-news {
@@ -139,7 +119,7 @@ header {
 }
 
 .mirror-news .newsfeed-source {
-  color: rgba(229, 216, 198, 0.52);
+  color: var(--mirror-news-source);
   font-size: 0.78rem;
   letter-spacing: 0.12em;
   margin-bottom: 8px;
@@ -155,5 +135,5 @@ header {
 }
 
 .dimmed {
-  color: rgba(229, 216, 198, 0.5);
+  color: var(--mirror-dimmed);
 }
