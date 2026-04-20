@@ -78,11 +78,13 @@ Bo config nay gio duoc tach ra thanh:
 ```text
 config/config.vps.js
 config/builder.js
+config/profiles/active.txt
 config/profiles/vps.json
 css/generated/vps.css
 ```
 
 `config/config.vps.js` chi con nhiem vu nap profile va build config. Du lieu thiet bi, module va theme nam trong `config/profiles/vps.json`.
+Profile dang dung mac dinh duoc danh dau trong `config/profiles/active.txt`.
 
 Profile mac dinh hien tai duoc set theo huong an toan cho VPS:
 
@@ -112,7 +114,7 @@ MM_CONFIG_FILE=config/config.vps.js npm run server:watch
 Luu y:
 
 - `server:watch` chi watch file, khong watch directory.
-- File `config/config.vps.js` se tu them `watchTargets` cho builder, profile va css base.
+- File `config/config.vps.js` se tu them `watchTargets` cho builder, `active.txt`, profile va css base.
 - Neu ban muon watch them file khac, bo sung vao `watchTargets`.
 
 ## 8. Mo giao dien tu may cua ban
@@ -130,6 +132,22 @@ http://127.0.0.1:8080
 ```
 
 Cach nay an toan hon viec mo cong `8080` public.
+
+Ngoai giao dien mirror chinh, repo nay da co them trang quan tri:
+
+```text
+http://127.0.0.1:8080/admin
+```
+
+Trang nay dung de:
+
+- xem danh sach profile trong `config/profiles`
+- sua `general`, `theme`, `modules` bang website
+- tao profile moi tu file mau hoac nhan ban profile hien co
+- doi profile dang dung bang cach cap nhat `config/profiles/active.txt`
+- gui lenh reload giao dien cho client dang mo
+
+Neu ban muon doi ca module/layout ma khong restart tay, hay chay `server:watch`.
 
 ## 9. Neu muon public qua domain
 
@@ -161,16 +179,17 @@ Neu ban doi `basePath`, nho doi ca trong `config/config.vps.js`.
 Thu tu lam viec goi y:
 
 1. Sua `config/profiles/vps.json` de doi layout, module, vi tri, noi dung.
-2. Theme variables se duoc sinh ra `css/generated/vps.css`. Ban khong nen sua tay file generated nay.
-3. Sua `css/mirror.vps.css` neu ban can doi CSS cho module/layout theo kieu template chung.
-4. Tao `css/custom.css` tu file mau neu ban can them style rieng ngoai workflow profile:
+2. Neu muon doi profile dang dung tren may nay, sua `config/profiles/active.txt` hoac vao `/admin`.
+3. Theme variables se duoc sinh ra `css/generated/*.css`. Ban khong nen sua tay file generated nay.
+4. Sua `css/mirror.vps.css` neu ban can doi CSS cho module/layout theo kieu template chung.
+5. Tao `css/custom.css` tu file mau neu ban can them style rieng ngoai workflow profile:
 
 ```bash
 cp css/custom.css.sample css/custom.css
 ```
 
-5. Khi tao module rieng, dat trong `modules/YourModuleName`.
-6. Neu module co `node_helper.js`, khi sua file nay ban nen restart server hoac them no vao `watchTargets`.
+6. Khi tao module rieng, dat trong `modules/YourModuleName`.
+7. Neu module co `node_helper.js`, khi sua file nay ban nen restart server hoac them no vao `watchTargets`.
 
 ## 11. Lenh hay dung
 
@@ -210,5 +229,6 @@ Sau khi VPS chay len, thu tu hop ly nhat la:
 
 1. chot bo cuc mirror
 2. viet config cho Viet Nam
-3. tao 1 custom module rieng neu ban can du lieu/UX khac
-4. sau cung moi lam website quan ly profile va dong goi sang phan cung that
+3. dung `/admin` de chot workflow sua profile cho de ban va support
+4. tao 1 custom module rieng neu ban can du lieu/UX khac
+5. sau cung moi dong goi sang phan cung that

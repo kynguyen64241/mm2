@@ -76,6 +76,7 @@ config/*
 !config/config.vps.js
 !config/profiles/
 config/profiles/*
+!config/profiles/active.txt
 !config/profiles/device.sample.json
 !config/profiles/vps.json
 

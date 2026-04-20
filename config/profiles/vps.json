@@ -4,13 +4,22 @@
     "address": "127.0.0.1",
     "port": 8080,
     "basePath": "/",
-    "ipWhitelist": ["127.0.0.1", "::ffff:127.0.0.1", "::1"],
+    "ipWhitelist": [
+      "127.0.0.1",
+      "::ffff:127.0.0.1",
+      "::1"
+    ],
     "useHttps": false,
     "httpsPrivateKey": "",
     "httpsCertificate": "",
     "language": "vi",
     "locale": "vi-VN",
-    "logLevel": ["INFO", "LOG", "WARN", "ERROR"],
+    "logLevel": [
+      "INFO",
+      "LOG",
+      "WARN",
+      "ERROR"
+    ],
     "timeFormat": 24,
     "units": "metric"
   },
@@ -47,14 +56,14 @@
   },
   "modules": [
     {
-      "id": "alert",
+      "enabled": true,
       "module": "alert",
-      "enabled": true
+      "id": "alert"
     },
     {
-      "id": "clock-main",
-      "module": "clock",
       "enabled": true,
+      "module": "clock",
+      "id": "clock-main",
       "position": "top_left",
       "classes": "mirror-clock",
       "config": {
@@ -64,11 +73,11 @@
       }
     },
     {
-      "id": "calendar-main",
-      "module": "calendar",
       "enabled": false,
-      "header": "Lich",
+      "module": "calendar",
+      "id": "calendar-main",
       "position": "top_left",
+      "header": "Lich",
       "classes": "mirror-calendar",
       "config": {
         "calendars": [
@@ -80,9 +89,9 @@
       }
     },
     {
-      "id": "compliments-main",
-      "module": "compliments",
       "enabled": true,
+      "module": "compliments",
+      "id": "compliments-main",
       "position": "lower_third",
       "classes": "mirror-compliment",
       "config": {
@@ -120,9 +129,9 @@
       }
     },
     {
-      "id": "weather-current",
+      "enabled": false,
       "module": "weather",
-      "enabled": true,
+      "id": "weather-current",
       "position": "top_right",
       "header": "Hien tai",
       "classes": "mirror-weather-current",
@@ -137,9 +146,9 @@
       }
     },
     {
-      "id": "weather-forecast",
+      "enabled": false,
       "module": "weather",
-      "enabled": true,
+      "id": "weather-forecast",
       "position": "top_right",
       "header": "Du bao 5 ngay",
       "classes": "mirror-weather-forecast",
@@ -153,9 +162,9 @@
       }
     },
     {
-      "id": "news-main",
-      "module": "newsfeed",
       "enabled": true,
+      "module": "newsfeed",
+      "id": "news-main",
       "position": "bottom_bar",
       "classes": "mirror-news",
       "config": {
@@ -174,5 +183,6 @@
         "maxNewsItems": 10
       }
     }
-  ]
+  ],
+  "watchTargets": []
 }

@@ -118,10 +118,10 @@ function getHtml (req, res) {
 	html = html.replace("#VERSION#", global.version);
 	html = html.replace("#TESTMODE#", global.mmTestMode);
 
-	let configFile = "config/config.js";
-	if (typeof global.configuration_file !== "undefined") {
-		configFile = global.configuration_file;
-	}
+	const basePath = typeof config !== "undefined" && typeof config.basePath === "string" && config.basePath !== ""
+		? config.basePath
+		: "/";
+	const configFile = path.posix.join(basePath, "config.js");
 	html = html.replace("#CONFIG_FILE#", configFile);
 
 	res.send(html);
@@ -184,6 +184,50 @@ function getEnvVars (req, res) {
 }
 
 /**
+ * Serialize config data to a browser-readable JavaScript file.
+ * @param {*} value - The value to serialize.
+ * @returns {string} JavaScript code representation.
+ */
+function serializeConfig (value) {
+	switch (typeof value) {
+		case "function":
+			return value.toString();
+		case "string":
+			return JSON.stringify(value);
+		case "number":
+		case "boolean":
+			return JSON.stringify(value);
+		case "undefined":
+			return "undefined";
+		case "object":
+			if (value === null) {
+				return "null";
+			}
+
+			if (Array.isArray(value)) {
+				return `[${value.map((item) => serializeConfig(item)).join(", ")}]`;
+			}
+
+			return `{${Object.entries(value)
+				.filter(([, item]) => item !== undefined)
+				.map(([key, item]) => `${JSON.stringify(key)}: ${serializeConfig(item)}`)
+				.join(", ")}}`;
+		default:
+			return "null";
+	}
+}
+
+/**
+ * Return browser config as a generated JavaScript file.
+ * @param {Request} _req - the request
+ * @param {Response} res - the result
+ */
+function getConfigJs (_req, res) {
+	res.type("application/javascript");
+	res.send(`var config = ${serializeConfig(config)};\nif (typeof module !== "undefined") { module.exports = config; }\n`);
+}
+
+/**
  * Get the config file path from environment or default location
  * @returns {string} The absolute config file path
  */
@@ -201,4 +245,4 @@ function getConfigFilePath () {
 	return path.resolve(global.configuration_file || `${global.root_path}/config/config.js`);
 }
 
-module.exports = { cors, getConfig, getHtml, getVersion, getStartup, getEnvVars, getEnvVarsAsObj, getUserAgent, getConfigFilePath };
+module.exports = { cors, getConfig, getConfigJs, getHtml, getVersion, getStartup, getEnvVars, getEnvVarsAsObj, getUserAgent, getConfigFilePath };

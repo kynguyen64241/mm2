@@ -171,6 +171,11 @@ function buildConfig(profile, options = {}) {
 		"config/builder.js",
 		toRepoRelativePath(profilePath),
 		toPosixPath((profile.theme && profile.theme.baseCss) || "css/mirror.vps.css"),
+		"js/server.js",
+		"js/server_functions.js",
+		"js/admin_routes.js",
+		"js/admin_store.js",
+		...(Array.isArray(options.extraWatchTargets) ? options.extraWatchTargets : []),
 		...(Array.isArray(profile.watchTargets) ? profile.watchTargets : [])
 	]);
 

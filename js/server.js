@@ -6,7 +6,8 @@ const express = require("express");
 const helmet = require("helmet");
 const socketio = require("socket.io");
 const Log = require("logger");
-const { cors, getConfig, getHtml, getVersion, getStartup, getEnvVars } = require("#server_functions");
+const { cors, getConfig, getConfigJs, getHtml, getVersion, getStartup, getEnvVars } = require("#server_functions");
+const { regAdmin } = require("./admin_routes");
 
 const { ipAccessControl } = require(`${__dirname}/ip_access_control`);
 
@@ -105,9 +106,14 @@ function Server (config) {
 
 			app.get("/config", (req, res) => getConfig(req, res));
 
+			const configJsPath = path.posix.join(config.basePath || "/", "config.js");
+			app.get(configJsPath, (req, res) => getConfigJs(req, res));
+
 			app.get("/startup", (req, res) => getStartup(req, res));
 
 			app.get("/env", (req, res) => getEnvVars(req, res));
+
+			regAdmin({ app, io });
 
 			app.get("/", (req, res) => getHtml(req, res));
 
