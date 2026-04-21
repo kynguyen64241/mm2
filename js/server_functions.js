@@ -242,7 +242,22 @@ function getConfigFilePath () {
 		global.configuration_file = process.env.MM_CONFIG_FILE;
 	}
 
-	return path.resolve(global.configuration_file || `${global.root_path}/config/config.js`);
+	if (global.configuration_file) {
+		return path.resolve(global.configuration_file);
+	}
+
+	const defaultConfigPath = path.resolve(global.root_path, "config", "config.js");
+	if (fs.existsSync(defaultConfigPath)) {
+		return defaultConfigPath;
+	}
+
+	const vpsConfigPath = path.resolve(global.root_path, "config", "config.vps.js");
+	if (fs.existsSync(vpsConfigPath)) {
+		global.configuration_file = path.relative(global.root_path, vpsConfigPath);
+		return vpsConfigPath;
+	}
+
+	return defaultConfigPath;
 }
 
 module.exports = { cors, getConfig, getConfigJs, getHtml, getVersion, getStartup, getEnvVars, getEnvVarsAsObj, getUserAgent, getConfigFilePath };

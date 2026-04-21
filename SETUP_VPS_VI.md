@@ -143,11 +143,54 @@ Trang nay dung de:
 
 - xem danh sach profile trong `config/profiles`
 - sua `general`, `theme`, `modules` bang website
+- sua nhanh cac module pho bien nhu `clock`, `weather`, `newsfeed`, `compliments`, `calendar`
 - tao profile moi tu file mau hoac nhan ban profile hien co
 - doi profile dang dung bang cach cap nhat `config/profiles/active.txt`
+- validate profile truoc khi luu
+- luu lich su snapshot de rollback khi can
 - gui lenh reload giao dien cho client dang mo
 
 Neu ban muon doi ca module/layout ma khong restart tay, hay chay `server:watch`.
+
+## 8.1. Bao ve /admin bang Basic Auth
+
+Mac dinh `/admin` van hoat dong trong mang local neu ban chua set auth.
+Khi can mo ra LAN/VPS public, nen bat auth bang env:
+
+```bash
+export MM_ADMIN_USER=admin
+export MM_ADMIN_PASS='doi-mat-khau-man'
+```
+
+Neu can doi realm:
+
+```bash
+export MM_ADMIN_REALM='MagicMirror Admin'
+```
+
+Khi hai bien `MM_ADMIN_USER` va `MM_ADMIN_PASS` cung ton tai, ca:
+
+- `/admin`
+- `/admin/api/*`
+
+se duoc bao ve bang HTTP Basic Auth.
+
+## 8.2. Snapshot va rollback profile
+
+Moi lan:
+
+- tao profile moi
+- luu profile
+- restore profile
+
+he thong se tao snapshot vao:
+
+```text
+config/profiles/history/<ten-profile>/
+```
+
+Trang `/admin` se hien lich su nay de ban rollback nhanh.
+Gioi han mac dinh la 30 snapshot moi profile.
 
 ## 9. Neu muon public qua domain
 
@@ -190,6 +233,7 @@ cp css/custom.css.sample css/custom.css
 
 6. Khi tao module rieng, dat trong `modules/YourModuleName`.
 7. Neu module co `node_helper.js`, khi sua file nay ban nen restart server hoac them no vao `watchTargets`.
+8. Neu can rollback cau hinh, vao `/admin` va chon snapshot phu hop thay vi sua tay file trong `history`.
 
 ## 11. Lenh hay dung
 
@@ -223,12 +267,44 @@ Khi do ban moi can quan tam toi:
 - tu dong mo khi cap nguon
 - quan ly man hinh, PIR sensor, loa, camera
 
+Repo nay da co san file mau cho Raspberry Pi:
+
+```text
+ops/pi/run-server.sh
+ops/pi/run-kiosk.sh
+ops/pi/magicmirror-vps-server.service
+ops/pi/magicmirror-vps-kiosk.service
+```
+
+Flow goi y:
+
+1. copy repo len Pi o duong dan nhu `/home/pi/magicmirror_vps`
+2. chon `server` neu Pi chi dung lam backend
+3. chon `kiosk` neu Pi se mo guong full screen
+4. copy file `.service` tuong ung vao `/etc/systemd/system/`
+5. sua lai `User=` va `WorkingDirectory=` neu duong dan khac
+6. enable service:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable magicmirror-vps-kiosk.service
+sudo systemctl start magicmirror-vps-kiosk.service
+```
+
+Neu chi chay headless:
+
+```bash
+sudo systemctl enable magicmirror-vps-server.service
+sudo systemctl start magicmirror-vps-server.service
+```
+
 ## 13. Goi y huong di tiep theo
 
 Sau khi VPS chay len, thu tu hop ly nhat la:
 
 1. chot bo cuc mirror
 2. viet config cho Viet Nam
-3. dung `/admin` de chot workflow sua profile cho de ban va support
-4. tao 1 custom module rieng neu ban can du lieu/UX khac
-5. sau cung moi dong goi sang phan cung that
+3. bat auth cho `/admin` truoc khi cho nguoi khac truy cap
+4. dung `/admin` de chot workflow sua profile, rollback va support
+5. tao 1 custom module rieng neu ban can du lieu/UX khac
+6. sau cung moi dong goi sang phan cung that

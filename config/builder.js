@@ -1,50 +1,8 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const { GENERAL_DEFAULTS, THEME_VARS, cleanProfile, getIssues } = require("./profile_tools");
 
 const ROOT_PATH = path.resolve(__dirname, "..");
-
-const DEFAULT_GENERAL = {
-	address: "127.0.0.1",
-	port: 8080,
-	basePath: "/",
-	ipWhitelist: ["127.0.0.1", "::ffff:127.0.0.1", "::1"],
-	useHttps: false,
-	httpsPrivateKey: "",
-	httpsCertificate: "",
-	language: "vi",
-	locale: "vi-VN",
-	logLevel: ["INFO", "LOG", "WARN", "ERROR"],
-	timeFormat: 24,
-	units: "metric"
-};
-
-const DEFAULT_THEME_VARIABLES = {
-	"--color-text": "rgba(228, 217, 201, 0.78)",
-	"--color-text-dimmed": "rgba(206, 193, 176, 0.42)",
-	"--color-text-bright": "#f6efe6",
-	"--color-background": "#050505",
-	"--font-primary": "\"Roboto Condensed\"",
-	"--font-secondary": "\"Roboto\"",
-	"--font-size": "22px",
-	"--font-size-small": "0.8rem",
-	"--gap-body-top": "48px",
-	"--gap-body-right": "56px",
-	"--gap-body-bottom": "40px",
-	"--gap-body-left": "56px",
-	"--gap-modules": "28px",
-	"--mirror-bg-glow-top": "rgba(198, 155, 103, 0.14)",
-	"--mirror-bg-glow-bottom": "rgba(255, 255, 255, 0.05)",
-	"--mirror-header-border": "rgba(255, 255, 255, 0.14)",
-	"--mirror-header-text": "rgba(240, 227, 210, 0.72)",
-	"--mirror-clock-date": "rgba(240, 227, 210, 0.8)",
-	"--mirror-weather-text": "rgba(230, 219, 204, 0.7)",
-	"--mirror-weather-icon": "rgba(241, 203, 138, 0.9)",
-	"--mirror-weather-detail": "rgba(226, 213, 197, 0.65)",
-	"--mirror-weather-day": "rgba(229, 216, 198, 0.6)",
-	"--mirror-weather-min": "rgba(229, 216, 198, 0.55)",
-	"--mirror-news-source": "rgba(229, 216, 198, 0.52)",
-	"--mirror-dimmed": "rgba(229, 216, 198, 0.5)"
-};
 
 function cloneJsonValue(value) {
 	if (value === undefined) {
@@ -79,7 +37,8 @@ function writeFileIfChanged(filePath, contents) {
 }
 
 function loadProfile(profilePath) {
-	return JSON.parse(fs.readFileSync(profilePath, "utf8"));
+	const profile = JSON.parse(fs.readFileSync(profilePath, "utf8"));
+	return cleanProfile(profile, { fileName: path.basename(profilePath) });
 }
 
 function buildGeneratedCss(profile, profilePath) {
@@ -90,7 +49,7 @@ function buildGeneratedCss(profile, profilePath) {
 	const generatedCssPath = path.resolve(ROOT_PATH, generatedCssRelativePath);
 	const baseCssRelativePath = toPosixPath(theme.baseCss || "css/mirror.vps.css");
 	const importPath = toPosixPath(path.relative(path.dirname(generatedCssPath), path.resolve(ROOT_PATH, baseCssRelativePath)));
-	const cssVariables = { ...DEFAULT_THEME_VARIABLES, ...(theme.variables || {}) };
+	const cssVariables = { ...THEME_VARS, ...(theme.variables || {}) };
 	const cssLines = [];
 
 	if (baseCssRelativePath) {
@@ -158,25 +117,42 @@ function uniqueWatchTargets(targets) {
 function buildConfig(profile, options = {}) {
 	const profilePath = options.profilePath || path.resolve(__dirname, "profiles", "vps.json");
 	const configPath = options.configPath || path.resolve(__dirname, "config.vps.js");
-	const generatedCss = buildGeneratedCss(profile, profilePath);
+	const clean = cleanProfile(profile, { fileName: path.basename(profilePath) });
+	const issues = getIssues(clean, {
+		fileName: path.basename(profilePath),
+		rootPath: ROOT_PATH
+	});
+
+	if (issues.length > 0) {
+		const error = new Error(`Profile invalid:\n- ${issues.join("\n- ")}`);
+		error.issues = issues;
+		throw error;
+	}
+
+	const generatedCss = buildGeneratedCss(clean, profilePath);
 	const general = {
-		...DEFAULT_GENERAL,
-		...(profile.general || {})
+		...GENERAL_DEFAULTS,
+		...(clean.general || {})
 	};
-	const modules = Array.isArray(profile.modules)
-		? profile.modules.map(normalizeModule).filter(Boolean)
+	const modules = Array.isArray(clean.modules)
+		? clean.modules.map(normalizeModule).filter(Boolean)
 		: [];
 	const watchTargets = uniqueWatchTargets([
 		toRepoRelativePath(configPath),
+		"config/profile_tools.js",
 		"config/builder.js",
 		toRepoRelativePath(profilePath),
-		toPosixPath((profile.theme && profile.theme.baseCss) || "css/mirror.vps.css"),
+		toPosixPath((clean.theme && clean.theme.baseCss) || "css/mirror.vps.css"),
 		"js/server.js",
 		"js/server_functions.js",
+		"js/admin_auth.js",
 		"js/admin_routes.js",
 		"js/admin_store.js",
+		"admin/index.html",
+		"admin/app.js",
+		"admin/app.css",
 		...(Array.isArray(options.extraWatchTargets) ? options.extraWatchTargets : []),
-		...(Array.isArray(profile.watchTargets) ? profile.watchTargets : [])
+		...(Array.isArray(clean.watchTargets) ? clean.watchTargets : [])
 	]);
 
 	return {

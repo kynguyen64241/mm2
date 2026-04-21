@@ -22,7 +22,21 @@ const ajv = new Ajv();
  */
 function getConfigFile () {
 	// FIXME: This function should be in core. Do you want refactor me ;) ?, be good!
-	return path.resolve(process.env.MM_CONFIG_FILE || `${rootPath}/config/config.js`);
+	if (process.env.MM_CONFIG_FILE) {
+		return path.resolve(process.env.MM_CONFIG_FILE);
+	}
+
+	const defaultConfigPath = path.resolve(rootPath, "config", "config.js");
+	if (fs.existsSync(defaultConfigPath)) {
+		return defaultConfigPath;
+	}
+
+	const vpsConfigPath = path.resolve(rootPath, "config", "config.vps.js");
+	if (fs.existsSync(vpsConfigPath)) {
+		return vpsConfigPath;
+	}
+
+	return defaultConfigPath;
 }
 
 /**

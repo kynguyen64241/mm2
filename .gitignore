@@ -74,6 +74,7 @@ config/*
 !config/config.js.sample
 !config/builder.js
 !config/config.vps.js
+!config/profile_tools.js
 !config/profiles/
 config/profiles/*
 !config/profiles/active.txt

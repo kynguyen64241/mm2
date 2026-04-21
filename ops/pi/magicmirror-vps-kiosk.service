@@ -1,0 +1,19 @@
+[Unit]
+Description=MagicMirror VPS kiosk
+After=graphical.target network-online.target
+Wants=graphical.target network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/magicmirror_vps
+Environment=MM_ROOT_DIR=/home/pi/magicmirror_vps
+Environment=MM_CONFIG_FILE=config/config.vps.js
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/pi/.Xauthority
+ExecStart=/bin/bash /home/pi/magicmirror_vps/ops/pi/run-kiosk.sh
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical.target

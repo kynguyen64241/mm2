@@ -129,7 +129,7 @@
       }
     },
     {
-      "enabled": false,
+      "enabled": true,
       "module": "weather",
       "id": "weather-current",
       "position": "top_right",
@@ -146,7 +146,7 @@
       }
     },
     {
-      "enabled": false,
+      "enabled": true,
       "module": "weather",
       "id": "weather-forecast",
       "position": "top_right",

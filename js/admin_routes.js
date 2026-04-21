@@ -1,12 +1,21 @@
 const path = require("node:path");
 const express = require("express");
 const Log = require("logger");
-const { listProfiles, newProfile, readActiveFile, readProfile, saveProfile, setActive } = require("./admin_store");
+const { getAuth, guardAdmin } = require("./admin_auth");
+const { listProfiles, newProfile, readActiveFile, readProfile, restoreSnap, saveProfile, setActive } = require("./admin_store");
 
 function sendErr(res, statusCode, message) {
 	res.status(statusCode).json({
 		ok: false,
 		error: message
+	});
+}
+
+function sendFail(res, statusCode, error) {
+	res.status(statusCode).json({
+		error: error.message,
+		issues: Array.isArray(error.issues) ? error.issues : [],
+		ok: false
 	});
 }
 
@@ -20,6 +29,7 @@ function regAdmin({ app, io }) {
 		res.json({
 			ok: true,
 			activeProfile: readActiveFile(),
+			authEnabled: getAuth().enabled,
 			profiles: listProfiles()
 		});
 	});
@@ -31,7 +41,7 @@ function regAdmin({ app, io }) {
 				data: readProfile(req.params.name)
 			});
 		} catch (error) {
-			sendErr(res, 404, error.message);
+			sendFail(res, 404, error);
 		}
 	});
 
@@ -49,7 +59,7 @@ function regAdmin({ app, io }) {
 				data: newProfile(fileName, copyFrom)
 			});
 		} catch (error) {
-			sendErr(res, 400, error.message);
+			sendFail(res, 400, error);
 		}
 	});
 
@@ -57,10 +67,27 @@ function regAdmin({ app, io }) {
 		try {
 			res.json({
 				ok: true,
-				data: saveProfile(req.params.name, req.body && req.body.profile)
+				data: saveProfile(req.params.name, req.body && req.body.profile, req.body && req.body.note)
 			});
 		} catch (error) {
-			sendErr(res, 400, error.message);
+			sendFail(res, 400, error);
+		}
+	});
+
+	router.post("/profiles/:name/restore", (req, res) => {
+		try {
+			const snapId = req.body && req.body.snapId;
+
+			if (!snapId) {
+				return sendErr(res, 400, "Thieu snapshot can restore.");
+			}
+
+			res.json({
+				ok: true,
+				data: restoreSnap(req.params.name, snapId)
+			});
+		} catch (error) {
+			sendFail(res, 400, error);
 		}
 	});
 
@@ -72,7 +99,7 @@ function regAdmin({ app, io }) {
 				activeProfile: fileName
 			});
 		} catch (error) {
-			sendErr(res, 400, error.message);
+			sendFail(res, 400, error);
 		}
 	});
 
@@ -84,8 +111,8 @@ function regAdmin({ app, io }) {
 		});
 	});
 
-	app.use("/admin/api", router);
-	app.use("/admin", express.static(adminPath));
+	app.use("/admin/api", guardAdmin, router);
+	app.use("/admin", guardAdmin, express.static(adminPath));
 }
 
 module.exports = {

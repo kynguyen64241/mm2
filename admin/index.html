@@ -37,11 +37,13 @@
             <div id="profileList" class="profile-list"></div>
           </section>
 
+          <section id="statusCard" class="card"></section>
+
           <section class="card">
             <p class="kicker">Ghi chú vận hành</p>
             <ul class="notes">
-              <li>Nên chạy bằng <code>npm run server:watch</code> để đổi module tự áp dụng sau khi lưu.</li>
-              <li>Đổi profile đang dùng sẽ hiệu quả nhất khi file <code>config/profiles/active.txt</code> được watcher theo dõi.</li>
+              <li>Nên chạy bằng <code>npm run server:watch</code> để đổi profile và backend áp dụng lại tự động.</li>
+              <li>Mỗi lần lưu hoặc restore sẽ sinh snapshot trong <code>config/profiles/history</code> để rollback.</li>
               <li>Theme thực tế được sinh vào <code>css/generated/*.css</code>, không nên sửa tay file generated.</li>
             </ul>
           </section>
@@ -53,6 +55,15 @@
         </main>
       </div>
     </div>
+
+    <datalist id="moduleNameList">
+      <option value="alert"></option>
+      <option value="clock"></option>
+      <option value="calendar"></option>
+      <option value="compliments"></option>
+      <option value="weather"></option>
+      <option value="newsfeed"></option>
+    </datalist>
 
     <script src="/admin/app.js"></script>
   </body>

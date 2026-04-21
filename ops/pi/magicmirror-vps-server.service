@@ -1,0 +1,17 @@
+[Unit]
+Description=MagicMirror VPS server-only
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/magicmirror_vps
+Environment=MM_ROOT_DIR=/home/pi/magicmirror_vps
+Environment=MM_CONFIG_FILE=config/config.vps.js
+ExecStart=/bin/bash /home/pi/magicmirror_vps/ops/pi/run-server.sh
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
