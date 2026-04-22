@@ -20,7 +20,7 @@ function sendFail(res, statusCode, error) {
 }
 
 function regAdmin({ app, io }) {
-	const adminPath = path.resolve(global.root_path, "admin");
+	const adminPath = path.resolve(global.root_path, "web", "admin");
 	const router = express.Router();
 
 	router.use(express.json({ limit: "2mb" }));

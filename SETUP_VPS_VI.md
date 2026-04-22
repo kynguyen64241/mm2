@@ -139,6 +139,14 @@ Ngoai giao dien mirror chinh, repo nay da co them trang quan tri:
 http://127.0.0.1:8080/admin
 ```
 
+Source cua web admin duoc dat rieng trong:
+
+```text
+web/admin/
+```
+
+Route public van giu la `/admin` de khong phai doi workflow dang dung.
+
 Trang nay dung de:
 
 - xem danh sach profile trong `config/profiles`
@@ -308,3 +316,25 @@ Sau khi VPS chay len, thu tu hop ly nhat la:
 4. dung `/admin` de chot workflow sua profile, rollback va support
 5. tao 1 custom module rieng neu ban can du lieu/UX khac
 6. sau cung moi dong goi sang phan cung that
+
+## 14. Tai lieu kien truc mo rong
+
+Neu ban di theo huong:
+
+- website nam o server nha cung cap
+- Raspberry Pi nam tai nha khach hang
+- cap nhat giao dien va chuc nang tu xa
+
+thi xem them tai lieu:
+
+```text
+setup_v1.md
+```
+
+File nay mo ta ro:
+
+- backend trung tam
+- Raspberry Pi agent
+- API de dong bo
+- phan nao luu DB, phan nao giu dang file
+- flow update config va flow update code

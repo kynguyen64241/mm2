@@ -148,9 +148,9 @@ function buildConfig(profile, options = {}) {
 		"js/admin_auth.js",
 		"js/admin_routes.js",
 		"js/admin_store.js",
-		"admin/index.html",
-		"admin/app.js",
-		"admin/app.css",
+		"web/admin/index.html",
+		"web/admin/app.js",
+		"web/admin/app.css",
 		...(Array.isArray(options.extraWatchTargets) ? options.extraWatchTargets : []),
 		...(Array.isArray(clean.watchTargets) ? clean.watchTargets : [])
 	]);
